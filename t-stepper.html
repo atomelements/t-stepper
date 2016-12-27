@@ -30,16 +30,38 @@
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
       }
+      .label{
+        margin-bottom: var(--stepper-label-margin, 10px);
+      }
+      .label,
       #label,
       #count{
         font-size: var(--form-label-size,16px);
-        padding-left: 5px;
       }
       #count{
         color: var(--form-value-color, #777777);
+        height: var(--stepper-height, 30px);
+        box-sizing: border-box;
+        padding-right: 5px;
+      }
+      :host .layout >div{
+        -ms-align-self: stretch;
+        -webkit-align-self: stretch;
+        align-self: stretch;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
       }
       .secondaryLabel{
         font-size: var(--form-secondary-label-size,12px);
+      }
+      .label .secondaryLabel{
+        font-size: inherit;
       }
       iron-icon{ 
         -ms-align-self: center;
@@ -58,10 +80,10 @@
       :host([styled]) #space{
         display:none;
       }
-      :host([styled]) .layout >div{
-        -ms-align-self: stretch;
-        -webkit-align-self: stretch;
-        align-self: stretch;
+      :host([styled]) #count {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
       }
       :host([styled]) #count,
       :host([styled]) #label{
@@ -72,14 +94,11 @@
         border-top:1px solid;
         border-bottom: 1px solid;
         border-color: var(--form-underline-color, #e0e0e0);
-        text-align: right;
-        padding: 5px;
       }
       :host([styled]) #label{
         -ms-flex: 4;
         -webkit-flex: 4;
         flex: 4;
-        text-align:left 
       }
       :host([disable-plus]) #add,
       :host([disable-minus]) #minus{
@@ -87,12 +106,16 @@
       }
 
     </style>
+        <div class="label" hidden$="[[!alwaysFloatLabel]]">
+          <span>{{_label}}&nbsp;{{secondaryLabel}}</span>
+          <content select=".price-secondary-label"></content>
+        </div>
         <div class="layout horizontal center">
           <div id="icon" hidden$="{{!hasIcon}}" restamp="true">
             <iron-icon icon="{{ico}}"></iron-icon>
           </div>
-          <div id="count">{{count}}</div><span>&nbsp;</span>
-          <div id="label">
+          <div id="count">{{count}}</div>
+          <div id="label" hidden$="[[alwaysFloatLabel]]">
               <span>{{_label}}</span>
               &nbsp;
               <span class="secondaryLabel">{{secondaryLabel}}</span>
@@ -179,6 +202,15 @@ Polymer({
 
         /**
        * To check if it is styled
+       */
+        alwaysFloatLabel:{
+          type: Boolean,
+          value:false,
+          reflectToAttribute:true
+        },
+
+        /**
+       * To Float the label on top
        */
         styled:{
           type: Boolean,
