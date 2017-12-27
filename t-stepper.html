@@ -108,7 +108,7 @@
     </style>
         <div class="label" hidden$="[[!alwaysFloatLabel]]">
           <span>{{_label}}&nbsp;{{secondaryLabel}}</span>
-          <content select=".price-secondary-label"></content>
+          <slot name=".price-secondary-label"></slot>
         </div>
         <div class="layout horizontal center">
           <div id="icon" hidden$="{{!hasIcon}}" restamp="true">
@@ -119,7 +119,7 @@
               <span>{{_label}}</span>
               &nbsp;
               <span class="secondaryLabel">{{secondaryLabel}}</span>
-              <content select=".price-secondary-label"></content>
+              <slot name=".price-secondary-label"></slot>
           </div>
           <div id="space" class="flex" hidden$="{{styled}}" restamp="true">
           </div>
